@@ -151,8 +151,12 @@ fn test_seq() {
         ["- a\n  - b"]
     );
     assert_eq!(
+        run_parser_and_deref_seq_spans("foo:\n- a\n- b").unwrap(),
+        ["- a\n- b"]
+    );
+    assert_eq!(
         run_parser_and_deref_seq_spans("foo:\n  - a\n  - bar:\n    - b\n    - c").unwrap(),
-        ["b\n    - c", "- a\n  - bar:\n    - b\n    - c"]
+        ["- b\n    - c", "- a\n  - bar:\n    - b\n    - c"]
     );
 }
 
@@ -211,6 +215,10 @@ fn test_node_properties() {
     assert_eq!(
         run_parser_and_deref_seq_spans("foo: &a\n  - a").unwrap(),
         ["&a\n  - a"]
+    );
+    assert_eq!(
+        run_parser_and_deref_seq_spans("foo: &a\n- a").unwrap(),
+        ["&a\n- a"]
     );
 }
 

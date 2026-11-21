@@ -5,6 +5,13 @@
 - "Version bump" releases increment their version to match the crate workspace and
   contain no functional changes.
 
+## Unreleased
+
+**Breaking Changes**:
+
+- A block sequence at the same indentation as its mapping key starts its span at its first `-`,
+  as an indented block sequence does and as libyaml reports it.
+
 ## v0.4.0
 
 **Breaking Changes**:

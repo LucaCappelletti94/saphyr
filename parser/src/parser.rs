@@ -931,7 +931,7 @@ impl<'input, T: Input> Parser<'input, T> {
         let (event, end_mark) = match *self.peek_token()? {
             Token(mark, TokenType::BlockEntry) if indentless_sequence => {
                 self.state = State::IndentlessSequenceEntry;
-                (Event::SequenceStart(anchor_id, tag), mark.end)
+                (Event::SequenceStart(anchor_id, tag), mark.start)
             }
             Token(_, TokenType::Scalar(..)) => {
                 self.pop_state();
@@ -1186,7 +1186,7 @@ impl<'input, T: Input> Parser<'input, T> {
                 ) = *self.peek_token()?
                 {
                     self.state = State::IndentlessSequenceEntry;
-                    Ok((Event::empty_scalar(), mark))
+                    Ok((Event::empty_scalar(), Span::empty(mark.end)))
                 } else {
                     self.push_state(State::IndentlessSequenceEntry);
                     self.parse_node(true, false)
@@ -1219,7 +1219,7 @@ impl<'input, T: Input> Parser<'input, T> {
                 self.skip();
                 if let Token(_, TokenType::BlockEntry | TokenType::BlockEnd) = *self.peek_token()? {
                     self.state = State::BlockSequenceEntry;
-                    Ok((Event::empty_scalar(), mark))
+                    Ok((Event::empty_scalar(), Span::empty(mark.end)))
                 } else {
                     self.push_state(State::BlockSequenceEntry);
                     self.parse_node(true, false)

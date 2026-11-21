@@ -391,7 +391,7 @@ fn test_issue37() {
             (Event::Scalar("null".into(), ScalarStyle::Plain, 0, None),                              Span::new(Marker::new(165, 8, 31), Marker::new(169, 8, 35))),
             (Event::SequenceEnd,                                                                     Span::new(Marker::new(169, 8, 35), Marker::new(170, 8, 36))),
             (Event::Scalar("indentless_array_block_null_value".into(), ScalarStyle::Plain, 0, None), Span::new(Marker::new(175, 9, 4), Marker::new(208, 9, 37))),
-            (Event::SequenceStart(0, None),                                                          Span::new(Marker::new(215, 10, 5), Marker::new(215, 10, 5))),
+            (Event::SequenceStart(0, None),                                                          Span::new(Marker::new(214, 10, 4), Marker::new(214, 10, 4))),
 
             (Event::Scalar("".into(), ScalarStyle::Plain, 0, None),    Span::new(Marker::new(215, 10, 5), Marker::new(215, 10, 5))),
 

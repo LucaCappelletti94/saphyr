@@ -1638,7 +1638,7 @@ impl<'input, T: Input> Scanner<'input, T> {
         self.allow_simple_key();
 
         self.tokens
-            .push_back(Token(Span::empty(self.mark), TokenType::BlockEntry));
+            .push_back(Token(Span::new(mark, self.mark), TokenType::BlockEntry));
 
         Ok(())
     }
