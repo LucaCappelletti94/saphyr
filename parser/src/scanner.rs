@@ -1806,10 +1806,14 @@ impl<'input, T: Input> Scanner<'input, T> {
         }
 
         if self.mark.col < indent && (self.mark.col as isize) > self.indent {
-            return Err(ScanError::new_str(
-                self.mark,
-                "wrongly indented line in block scalar",
-            ));
+            // A document marker is not content. It ends the scalar before any content line.
+            self.input.lookahead(4);
+            if self.mark.col != 0 || !self.input.next_is_document_indicator() {
+                return Err(ScanError::new_str(
+                    self.mark,
+                    "wrongly indented line in block scalar",
+                ));
+            }
         }
 
         let mut line_buffer = String::with_capacity(100);

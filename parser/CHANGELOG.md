@@ -5,6 +5,15 @@
 - "Version bump" releases increment their version to match the crate workspace and
   contain no functional changes.
 
+## Unreleased
+
+**Fixes**:
+
+- A block scalar at the root of a document whose indentation is set by a whitespace-only line
+  or by an indentation indicator now ends empty at a following `---` or `...` line. It failed
+  with `wrongly indented line in block scalar`.
+
+
 ## v0.4.0
 
 **Breaking Changes**:

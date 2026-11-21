@@ -25,3 +25,24 @@ fn unindented_block_scalar_ends_at_document_start() {
     assert_eq!(documents("|-\nz\n---a\n"), ["z\n---a"]);
     assert_eq!(documents("|-\nz\n --- \n"), ["z\n --- "]);
 }
+
+/// A block scalar at the root whose indentation is set by a whitespace-only line or by an
+/// indentation indicator ends empty at a document marker in column 0.
+#[test]
+fn empty_block_scalar_ends_at_document_marker() {
+    assert_eq!(documents("|\n \n...\n"), [""]);
+    assert_eq!(documents("|\n \n---\n"), ["", ""]);
+    assert_eq!(documents("|\n \n--- a\n"), ["", "a"]);
+    assert_eq!(documents("|-\n  \n \n...\n"), [""]);
+    assert_eq!(documents("|+\n \n\n---\n"), ["\n\n", ""]);
+    assert_eq!(documents(">\n \n...\n"), [""]);
+    assert_eq!(documents("|1\n...\n"), [""]);
+    assert_eq!(documents("|2\n \n---\n"), ["", ""]);
+    // Content lines, not markers.
+    for input in ["|\n \nfoo\n", "|\n  \n ---\n"] {
+        assert!(
+            Parser::new_from_str(input).any(|item| item.is_err()),
+            "{input:?}"
+        );
+    }
+}
